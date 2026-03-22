@@ -23,6 +23,7 @@
 package de.splatgames.aether.fp.types;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -767,12 +768,12 @@ public sealed interface Result<T, E> permits Result.Success, Result.Failure {
          * <p>Two {@code Success} instances are considered equal if and only if they contain
          * equal values as determined by {@link Objects#equals(Object, Object)}.</p>
          *
-         * @param obj the object to compare with
+         * @param obj the object to compare with, may be {@code null}
          * @return {@code true} if the other object is a {@code Success} with an equal value,
          *         {@code false} otherwise
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -785,13 +786,15 @@ public sealed interface Result<T, E> permits Result.Success, Result.Failure {
         /**
          * Returns the hash code for this {@code Success}.
          *
-         * <p>The hash code is computed from the contained success value.</p>
+         * <p>The hash code is computed from the contained success value, combined with a type
+         * discriminator to reduce hash collisions between {@code Success} and {@code Failure}
+         * instances containing equal values.</p>
          *
          * @return the hash code based on the success value
          */
         @Override
         public int hashCode() {
-            return Objects.hash(this.value);
+            return Objects.hash(0, this.value);
         }
 
         /**
@@ -1100,12 +1103,12 @@ public sealed interface Result<T, E> permits Result.Success, Result.Failure {
          * <p>Two {@code Failure} instances are considered equal if and only if they contain
          * equal error values as determined by {@link Objects#equals(Object, Object)}.</p>
          *
-         * @param obj the object to compare with
+         * @param obj the object to compare with, may be {@code null}
          * @return {@code true} if the other object is a {@code Failure} with an equal error,
          *         {@code false} otherwise
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -1118,13 +1121,15 @@ public sealed interface Result<T, E> permits Result.Success, Result.Failure {
         /**
          * Returns the hash code for this {@code Failure}.
          *
-         * <p>The hash code is computed from the contained error value.</p>
+         * <p>The hash code is computed from the contained error value, combined with a type
+         * discriminator to reduce hash collisions between {@code Success} and {@code Failure}
+         * instances containing equal values.</p>
          *
          * @return the hash code based on the error value
          */
         @Override
         public int hashCode() {
-            return Objects.hash(this.error);
+            return Objects.hash(1, this.error);
         }
 
         /**

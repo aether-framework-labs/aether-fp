@@ -23,6 +23,7 @@
 package de.splatgames.aether.fp.types;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -441,7 +442,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right {
         /**
          * Constructs a new {@code Left} containing the specified value.
          *
-         * <p>This constructor is intentionally package-private. Use the factory method
+         * <p>This constructor is intentionally private. Use the factory method
          * {@link Either#left(Object)} to create instances.</p>
          *
          * @param value the left value, must not be {@code null}
@@ -641,11 +642,11 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right {
          * <p>Two {@code Left} instances are considered equal if and only if they contain
          * equal values as determined by {@link Objects#equals(Object, Object)}.</p>
          *
-         * @param obj the object to compare with
+         * @param obj the object to compare with, may be {@code null}
          * @return {@code true} if the other object is a {@code Left} with an equal value, {@code false} otherwise
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -658,13 +659,15 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right {
         /**
          * Returns the hash code for this {@code Left}.
          *
-         * <p>The hash code is computed from the contained left value.</p>
+         * <p>The hash code is computed from the contained left value, combined with a type
+         * discriminator to reduce hash collisions between {@code Left} and {@code Right}
+         * instances containing equal values.</p>
          *
          * @return the hash code based on the left value
          */
         @Override
         public int hashCode() {
-            return Objects.hash(this.value);
+            return Objects.hash(0, this.value);
         }
 
         /**
@@ -721,7 +724,7 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right {
         /**
          * Constructs a new {@code Right} containing the specified value.
          *
-         * <p>This constructor is intentionally package-private. Use the factory method
+         * <p>This constructor is intentionally private. Use the factory method
          * {@link Either#right(Object)} to create instances.</p>
          *
          * @param value the right value, must not be {@code null}
@@ -916,11 +919,11 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right {
          * <p>Two {@code Right} instances are considered equal if and only if they contain
          * equal values as determined by {@link Objects#equals(Object, Object)}.</p>
          *
-         * @param obj the object to compare with
+         * @param obj the object to compare with, may be {@code null}
          * @return {@code true} if the other object is a {@code Right} with an equal value, {@code false} otherwise
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(@Nullable final Object obj) {
             if (this == obj) {
                 return true;
             }
@@ -933,13 +936,15 @@ public sealed interface Either<L, R> permits Either.Left, Either.Right {
         /**
          * Returns the hash code for this {@code Right}.
          *
-         * <p>The hash code is computed from the contained right value.</p>
+         * <p>The hash code is computed from the contained right value, combined with a type
+         * discriminator to reduce hash collisions between {@code Left} and {@code Right}
+         * instances containing equal values.</p>
          *
          * @return the hash code based on the right value
          */
         @Override
         public int hashCode() {
-            return Objects.hash(this.value);
+            return Objects.hash(1, this.value);
         }
 
         /**
