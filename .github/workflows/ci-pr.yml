@@ -85,7 +85,7 @@ jobs:
 
     steps:
       - name: Download unit XMLs (Java 21 only)
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: unit-xml
           path: reports/unit
