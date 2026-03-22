@@ -78,9 +78,9 @@
     </organization>
 
     <scm>
-        <url>https://github.com/aether-framework/aether-fp/</url>
-        <connection>scm:git:https://github.com/aether-framework/aether-fp.git</connection>
-        <developerConnection>scm:git:ssh://github.com:aether-framework/aether-fp.git</developerConnection>
+        <url>https://github.com/aether-framework-labs/aether-fp/</url>
+        <connection>scm:git:https://github.com/aether-framework-labs/aether-fp.git</connection>
+        <developerConnection>scm:git:ssh://github.com:aether-framework-labs/aether-fp.git</developerConnection>
     </scm>
 
     <dependencyManagement>
