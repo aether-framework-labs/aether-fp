@@ -81,7 +81,7 @@ jobs:
 
     strategy:
       matrix:
-        java: [ '21', '23' ]
+        java: [ '21', '25' ]
 
     steps:
       - name: Checkout repository
